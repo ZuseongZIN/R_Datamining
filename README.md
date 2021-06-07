@@ -45,21 +45,31 @@
 	2.1.2-3 PCA
 PCA 분석방법은 측정된 변수들의 선형 조합(Linear Combination)에 의해 대표적인 주성분을 만들어 차원을 줄이는 방법이다. 현재 갖고 있는 데이터 중 식품섭취조사 자료인 ‘개인별 24시간 회상자료를 통한 영양소 섭취량에는 식품섭취량, 에너지, 수분 등을 포함하여 총 27가지의 영양소에 관한 연속형 변수들이 있다. 이 27가지의 변수들을 PCA분석을 통해 주요 변수들을 뽑아주었다. 총 27가지의 PC원소들 중 PC4번 변수까지 포함시켰더니 누적분산이 0.7을 넘어 유효한 PC그룹군을 4개까지로 지정하였다. 따라서 27개의 변수를 제거하고 새로운 4개의 PC원소를 추가함으로써 기존 변수들이 갖고 있던 최적의 성질을 유지한 채 차원을 줄여주었다. 이렇게 뽑힌 4가지의 PC원소를 살펴보니 가장 영향력이 큰 PC1변수에 큰 영향을 끼치는 기존 변수들은 인, 에너지, 카로틴으로 인체의 열량 및 활력에 영향을 미치는 요소들로 되어 있었다. 따라서, PC1 변수는 ‘energy’로 재정의 하였다. 두번째 PC2변수는 불포화지방, 지방, 포화지방이 영향력의 비중이 가장 크기 때문에 ‘fat-series’로 재정의하였다. 세번째 PC3변수는 비타민A, 레티놀, 카로틴이 영향을 많이 끼쳤다. 레티놀과 카로틴은 비타민 A의 한 종류이므로 변수를 ‘Vitamin_A’로 재정의하였다. 마지막 PC4변수는 3계지방산, 다가불포화지방산, 6계지방산이 큰 영향을 끼쳐서 ‘fatty-series’로 재정의하였다. 이처럼 27개의 연속형 변수들을 PCA분석을 통해 기존 분산을 가장 잘 반영하는 축으로 사영하여 주요변수 4개를 뽑아주어 차원을 축소시켜주었다.
  
+![image](https://user-images.githubusercontent.com/44190559/120962731-47990100-c79b-11eb-8a1f-3c0d21891b12.png)
 
 
 2.1.3 Feature engineering
  	2.1.3-0 EDA
  어떤 Feature가 핵심적인 역할을 할 수 있을지 직관에 따라 선택하고 Target Attribue와의 연관성을 알아보기 위해 시각화 해보았다.
-        
+
+
+![image](https://user-images.githubusercontent.com/44190559/120962762-52539600-c79b-11eb-9970-50d1cdf294e9.png)
+![image](https://user-images.githubusercontent.com/44190559/120962772-54b5f000-c79b-11eb-826d-ac06a78921da.png)
+
+	
 그림 1 : 가족크기와 영양제 복용여부		그림 2 : 성별과 영양제 복용여부
 
 
+![image](https://user-images.githubusercontent.com/44190559/120962793-60091b80-c79b-11eb-9e1f-e48e7f7983f6.png)
+![image](https://user-images.githubusercontent.com/44190559/120962797-61d2df00-c79b-11eb-82b5-b64183231acf.png)
 
 
          
 그림 3 : 결혼여부와 영양제 복용여부		그림 4 : 기초생활수급과 영양제 복용여부
 
 
+![image](https://user-images.githubusercontent.com/44190559/120962804-67c8c000-c79b-11eb-92a4-5bf83a9984a0.png)
+![image](https://user-images.githubusercontent.com/44190559/120962811-6a2b1a00-c79b-11eb-8cfc-5d3c04f8aeb9.png)
 
 
          
@@ -80,7 +90,14 @@ PCA 분석방법은 측정된 변수들의 선형 조합(Linear Combination)에 
 1) 월평균 가구 총소득: 먼저 월평균 가구 총소득에 대한 이상치를 탐색하고 시각화해야 한다. 그러나 애초에 원시 데이터에서 소득이 월 평균 1500만원 이상인 사람들은 1500만원으로 바꿔줌으로써 이미 이상치 처리가 되어있었다.
 2) 체질량지수: 데이터 표본에 포함된 사람 중에서 정말로 키가 극단적으로 크거나 작고 몸무게가 극단적으로 크거나 작은 사람들이 있을 것이다. 체질량지수에서 이상치를 찾아내서 이런 사람들에 대한 데이터를 한꺼번에 제거할 수 있을 것이다.  메소드는 boxplot을 이용한다. 
  
-위 그림을 보면 상자의 크기는 제3사분위수에서 제1사분위수를 나타내게 된다. 이 길이를 L이라고 하자. 상자 위아래의 선분은 최소값, 최대값을 표시하며 1.5L을 넘어가는 부분을 이상치로 표시하게 된다. 이상치가 위 아래로 존재하므로 삭제해야 한다
+ 
+ ![image](https://user-images.githubusercontent.com/44190559/120962828-731beb80-c79b-11eb-87fe-2a3b5d4a34d9.png)
+ 
+ 
+위 그림을 보면 상자의 크기는 제3사분위수에서 제1사분위수를 나타내게 된다. 이 길이를 L이라고 하자. 상자 위아래의 선분은 최소값, 최대값을 표시하며 1.5L을 넘어가는 부분을 이상치로 표시하게 된다. 이상치가 위 아래로 존재하므로 삭제해야 한다.
+
+![image](https://user-images.githubusercontent.com/44190559/120962847-7b742680-c79b-11eb-9c63-b110da2bad9d.png)
+
  이상치의 대략적인 양을 알아내기 위해서 3D scatter를 통해 3차원으로 시각화를 해보면 체질량 지수가 대략 0(15)에 가까운 사람과 체질량 지수가 1.0(41)에 가까운 사람이 존재한다. 위로 41 * 0.8 = 32.8 이상의 체질량 지수를 가진 사람들을 제거해준다. 마찬가지로 아래로는 체질량 지수가 15에 가까운 순으로 10개 정도를 제거해준다.
 
 
@@ -120,59 +137,82 @@ Random Forest는 Decision Tree 기반의 예측 모델이다. 무작위의 의�
 3. Results
 3.1 전처리 결과
  
+ ![image](https://user-images.githubusercontent.com/44190559/120962865-875fe880-c79b-11eb-9516-c644c089e9cf.png)
+ 
 전처리는 위에서 기술한 Method를 그대로 적용했다. raw데이터는 분석 대상에서 제외되는 행, 즉 18세 미만 청소년 행과 휴리스틱 기반 속성 제거를 한 결과이다. Processed1부터 processed5까지는 파레토 법칙에 기반한 Nan값 처리 과정에 대한 결과이고, 마지막 processed6은 Feature engineering을 적용한 결과이다.  
 
 3.2 Cluster Analysis 결과
 3.2-1 상관분석 : 
 전처리리를 마무리 했던 데이터에서는 연속형 Attribute가 많지 않았다. 그래서 추가적인 군집분석을 시행하기 위해서 CRISP-DM의 과정을 따라 다시 데이터 전처리로 돌아갔고 연속형 Attribute를 찾아보았다. 연속형 Attribute 간에 상관이 높은 Atrribute를 분석하고 제거하였다. 
+
+![image](https://user-images.githubusercontent.com/44190559/120962877-8d55c980-c79b-11eb-8f44-a56e119f5e02.png)
  
 예시1 : N_FAT(지방)과 N_MUFA(단일불포화지방산)은 상관관계가 높으므로 N_FAT하나만 군집분석에 사용한다. 
+ 
+ ![image](https://user-images.githubusercontent.com/44190559/120962895-95156e00-c79b-11eb-9b46-4f7940c682ae.png)
  
 예시2: HE_wt (몸무게)와 HE_BMI (체질량지수)는 상관관계가 높으므로 HE_BMI 하나만 군집분석에 사용한다.
 3.1-2 최적 군집 수의 파악
   Nbclust 라이브러리를 통해 데이터 속에서 최적의 군집 수를 파악할 수 있다. 분석 결과, 4에서 6까지의 군집 수가 최적 군집수로 파악되었다. 따라서 4에서 6사이의 수를 군집 개수로 지정하여 군집분석을 시행한다. 
 
+![image](https://user-images.githubusercontent.com/44190559/120962908-9c3c7c00-c79b-11eb-9765-f257facfd8bc.png)
+![image](https://user-images.githubusercontent.com/44190559/120962915-9fd00300-c79b-11eb-811c-179861697156.png)
 
+![image](https://user-images.githubusercontent.com/44190559/120962928-a8c0d480-c79b-11eb-9141-2f115f85bdf1.png)
  
 K-means를 사용한 분할적 군집분석(Partitional Clustering)이 정당한 군집으로 나뉘었다는 근거를 얻기 위해서 계층적 군집분석(Hierarchical Clustering)을 추가적으로 시행하였다. 이는 단지 초기 군집을 잡을 때 사용한 centroid들과 결과로써 나온 군집들이 타당한 군집인지를 판별하기 위해 사용하였다. 계층적 군집 분석은 너무 많은 양의 데이터를 포함하기 어렵기 때문에 대표적으로 100개 정도를 랜덤하게 뽑아서 사용하였다.
 
 3.1-3 K-means Cluster Analysis
 직관적으로 군집이 존재할 만한 데이터끼리 군집분석을 시행해보았다.
  
+ 
+ ![image](https://user-images.githubusercontent.com/44190559/120962947-b24a3c80-c79b-11eb-95e9-c9dcc7f6efcd.png)
+ 
 그림 : 나이, 소득분위에 대한 군집분석
 
+ ![image](https://user-images.githubusercontent.com/44190559/120962955-b9714a80-c79b-11eb-9f22-7856595e3e29.png)
  
 그림 : 비타민A와 비타민 C에 대한 군집분석
 
+![image](https://user-images.githubusercontent.com/44190559/120962972-c0985880-c79b-11eb-9d57-0e1fcdbda655.png)
  
 그림 : 몸무게와 비타민에 대한 군집분석
 
+![image](https://user-images.githubusercontent.com/44190559/120962983-c68e3980-c79b-11eb-9733-194e4368caed.png)
  
 그림 : 칼슘과 나트륨대한 군집분석
 
 
-
+![image](https://user-images.githubusercontent.com/44190559/120963004-cd1cb100-c79b-11eb-8cf8-459a87e79e90.png)
  
 그림 : 철과 인에 대한 군집분석
 
  
+ ![image](https://user-images.githubusercontent.com/44190559/120963021-d279fb80-c79b-11eb-957f-931357d1c25c.png)
+
 그림 : 나이와 칼슘에 대한 군집분석
 
 
-
+![image](https://user-images.githubusercontent.com/44190559/120963041-db6acd00-c79b-11eb-91ed-4caf2167279b.png)
  
 그림 : 월 평균 소득과 식품섭취량에 대한 군집분석
 
+ ![image](https://user-images.githubusercontent.com/44190559/120963050-e0c81780-c79b-11eb-9005-e37c7b303729.png)
  
 그림 : 나이와 콜레스테테롤에 대한 군집분석
 
+![image](https://user-images.githubusercontent.com/44190559/120963063-e6bdf880-c79b-11eb-823d-48f62e72e9a4.png)
  
 그림 : 설탕과 탄수화물에 대한 군집분석
 
 또한 3차원 형태로도 시각화를 수행하였다. 3개 Attribute 이상, 즉 3차원 이상의 데이터에 대해 군집을 분석할 때 2차원 상에서는 직관적으로 이를 구분하기 어렵다. 따라서 이를 3차원 이상으로 새로이 시각화할 수 있는 방법이 필요했다. 우리는 K-means clustering에 있어 kmeans() 라이브러리 내장 함수를 이용하여 clustering을 수행하였고, clustered 된 데이터를 scatterplot3d라는 3차원 시각화 라이브러리를 통해 시각화할 수 있었다. 아래는 나이(datas2$age), BMI(datas2$HE_BMI), 월간 소득(datas2$earn_month)의 세 가지 attribute를 통해 군집을 시각화한 예시이다.
  
+ ![image](https://user-images.githubusercontent.com/44190559/120963078-ede50680-c79b-11eb-9e2e-0cbdb44f7c41.png)
+ 
 그림 : 나이, 체질량지수, 월평균소득에 대한 군집분석 시각화(2차원)
 위처럼, 다양한 군집을 2차원 평면 상에서 표현할 경우 이를 제대로 구분할 수 없고, x,y,z의 세 개 축을 각각 원하는 Attribute로 지정하여 군집이 3차원 상에서 어떻게 형성되는 지 확인할 수 있었다.
+ 
+ ![image](https://user-images.githubusercontent.com/44190559/120963103-f3dae780-c79b-11eb-9bc7-d7fc3c2384a5.png)
  
 그림 : 나이, 체질량지수, 월평균소득에 대한 군집분석(3차원)
 3.2-4 Multiple runs
@@ -187,13 +227,19 @@ K-means를 사용한 분할적 군집분석(Partitional Clustering)이 정당한
  3.3 연관분석 결과
 <아무런 설정을 하지 않은 경우>
  
+ ![image](https://user-images.githubusercontent.com/44190559/120963124-fc332280-c79b-11eb-914d-5422690a9284.png)
+ 
 (지지도 = 0.2, 신뢰도 0.8)로 설정해서 모델을 돌린 결과이다. 상위 다섯 개의 규칙은 아래와 같다. 단, ‘점심을 먹는다’, ‘저녁을 먹는다’ 속성은 제외시키고 돌린 결과이다. 
 
 <우변 상수를 ‘영양제 복용’으로 적용한 경우>
  
+ ![image](https://user-images.githubusercontent.com/44190559/120963141-02c19a00-c79c-11eb-8d6e-2d2b1d14805f.png)
+ 
 (지지도 = 0.1, 신뢰도 = 0.7)로 잡았다. 우변상수를 결정했을 때 신뢰도가 0.7보다 크면 규칙이 생성되지 않았다. 생성된 규칙은 아래와 같다. BM2_3은 치간칫솔을 사용하는 사람이다. 우변상수를 설정한 경우 신뢰도를 0.7 이상으로 잡으면 규칙이 생성되지 않는다.
 
 4) 의사결정나무 분석 결과  
+ 
+ ![image](https://user-images.githubusercontent.com/44190559/120963158-0a813e80-c79c-11eb-998b-be02f452cb01.png)
  
 Model 생성 결과, 위와 같은 모델이 생성되었다. BM2_3 -> 칫솔 외, 치간칫솔의 사용 여부
  
@@ -202,16 +248,23 @@ Model의 평가 결과, 해당 Model의 Accuaracy는 66.38%로 측정되었다.
 (5) 랜덤포레스트 분석 결과
 앞에서 전처리한 데이터는 96개의 Attribute와 2965개의 Record를 가졌다. 계산 시간을 줄이고 데이터셋 마다 모델 출력결과를 확인하기 위해 전체 데이터셋을 4개로 나누었다. 이를 위해 R코드를 작성하여 각 데이터셋을 학습하기 위해 train set과 test set으로 7:3으로 나누었다. 그리고 개별적으로 Train set으로 랜덤 포레스트 모델을 돌려본다. 모델의 파라미터는 1000, 변수의 개수는 6개이다. 모델의 결과는 각각 다음과 같다.
  
-그림 2 : Data1에 대한 모델학습결과
+ ![image](https://user-images.githubusercontent.com/44190559/120963175-12d97980-c79c-11eb-89b8-da553e1113ad.png)
+ 
+그림 1 : Data1에 대한 모델학습결과
 
+ ![image](https://user-images.githubusercontent.com/44190559/120963195-1967f100-c79c-11eb-8e66-eb9210ede449.png)
  
 그림 2 : Data2에 대한 모델학습결과
 
+ ![image](https://user-images.githubusercontent.com/44190559/120963213-1ff66880-c79c-11eb-8f55-91fae47b778f.png)
  
 그림 3: Data3에 대한 모델학습결과
 
+ ![image](https://user-images.githubusercontent.com/44190559/120963227-24bb1c80-c79c-11eb-8914-ed04cf66eb9e.png)
  
 그림 4: Data4에 대한 모델학습결과
+ 
+ ![image](https://user-images.githubusercontent.com/44190559/120963248-2edd1b00-c79c-11eb-9d3e-38d680513157.png)
  
 그림 5: 전체 Data에 대한 모델학습결과
 
@@ -222,8 +275,12 @@ processed5~processed6에서 그룹화, 이상치 제거, 정규화, 형변환은
 2)군집 분석 결과
 군집분석을 전체 데이터에 대해 최초로 시행하고 유의미한 결과를 얻지 못했다. 다른 군집을 더 찾아보기 위해 영양소의 연속형 데이터들 중에서 2개씩만을 산출하여 2차원의 군집분석을 추가적으로 시행했지만, 이에 따른 군집이 초기 centroid를 잡은 그대로만 형성되어 유의미한 군집을 획득하지는 못하였다. 이 문제를 해결하고자 계층적 군집화와 초기 centroid의 직접적인 변형을 시도해 보았지만, 결과로 큰 차이를 만들지 않았다. 이에 따라 변수들의 상관 분석을 해보았더니, 영양소의 데이터들은 상당히 상관계수가 높아서 군집을 형성하기에 적합하지 않은 변수들이었다는 판단을 내릴 수 있었다. 결론적으로 시각화된 결과를 보았을 때 유의미한 군집을 발견할 수 없었다. 그림에 나타난 군집은 최적의 k에 따른 가상의 군집이다. 이는 데이터를 생성하기 위한 표본추출이 아주 잘 시행되었다고 볼 수 있다. 단지 두 개의 데이터만으로는 군집을 찾을 수 없을 것 같아서 변수를 통합하고 PCA 기법을 통해 영양소 데이터를 PC1으로 축소해서 다시 군집분석을 시행하였다. 
  
+ ![image](https://user-images.githubusercontent.com/44190559/120963266-369cbf80-c79c-11eb-9a77-8d7d6f5096a3.png)
+ 
 그림 : 차원1에 대한 변수의 기여도 분석
 입력한 여섯 가지 연속형 데이터들 중에서 PCA로 요약된 두 가지 차원에서 각 차원별로 가장 중요한 영향을 끼치는 두 요소는 키와 월 간 소득이었다. 군집 간의 거리를 최대화하고, 군집 내의 거리를 최소화하는 평가기준으로 적정한 군집 수를 찾아보니 우리의 데이터에서는 4개의 군집이 가장 적합하다는 결과가 나왔었다. 군집분석 시작 시 정규화를 선행하여 편차를 맞춰주었기 때문에 각 평균을 기준으로 총 4가지의 군집이 나왔다. 
+
+ ![image](https://user-images.githubusercontent.com/44190559/120963278-3bfa0a00-c79c-11eb-8712-bc3fd11395df.png)
  
 그림 : 주성분이 추출된 데이터를 바탕으로 시행한 군집분석
 4 가지의 군집 특성을 모두 이용할 수 있지만, 우리가 관심있게 본 그룹은 키가 작고, 월 소득이 높은 집단이었다. 특히 해당 집단은 밀도가 상당히 촘촘하여 유의미한 타겟이 될 수도 있다는 판단을 하였다. 따라서 해당 그룹의 집단들을 고객으로 규정한다면, 그에 적합한 마케팅적 접근을 하기 위해서는 가격을 낮추는 전략보다는 키에 관한 부분을 자극하여, 허리나 골격에 좋은 영양제에 관한 판매 전략을 수립하여, 좀 더 고객 친화적인 제품 전략을 취할 수 있다.  
