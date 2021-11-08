@@ -1,5 +1,5 @@
 # 보건복지부의 '국민건강영양조사' 2017,2018년 조사 자료 Data를 기반으로 한 한국인의 영양제 섭취 예측 모델 
-
+contributed by @ZuseongZIN
 ## 1. Introduction
 
 ### 1.1 Reseach Background and Motivation (과제 수행 배경 및 동기)
